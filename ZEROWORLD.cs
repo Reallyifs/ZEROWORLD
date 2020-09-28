@@ -1,4 +1,4 @@
-using System.Reflection;
+锘縰sing System.Reflection;
 using Terraria.ModLoader;
 using ZEROWORLD.Files;
 using ZEROWORLD.Items;
@@ -23,7 +23,7 @@ namespace ZEROWORLD
 
 		}
 
-		#region 引用其他类的方法
+		#region 寮曠敤鍏朵粬绫荤殑鏂规硶
 		public override void AddRecipeGroups() => ZRecipes.RecipeGroups();
 		public override void AddRecipes() => ZRecipes.Recipes();
 		public override object Call(params object[] args) => ZCall.Call(args);
