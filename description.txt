@@ -10,25 +10,29 @@
 [i:1007]
 ["[c/FF0000:作者]"] = "[c/FF0000:实弑Really'if.s.]";
 
-[i:1009]
-["[c/FFFF00:想法提供]"] = new string[]
+[i:1008]
+["[c/FF8000:想法提供]"] = new string[]
 {
--->"[c/FFFF00:星河]",
--->"[c/FFFF00:汐文]",
--->"[c/FFFF00:异翼]"
+-->"[c/FF8000:星河]",
+-->"[c/FF8000:汐文]",
+-->"[c/FF8000:异翼]"
 };
 
-[i:1010]
-["[c/80FF00:代码支持]"] = new string[]
+[i:1009]
+["[c/FFFF00:代码支持]"] = new string[]
 {
--->"[c/80FF00:Disorder Understar(无序之星)]",
--->"[c/80FF00:Example Mod]",
--->"[c/80FF00:Terraria]",
--->"[c/80FF00:TModLoader]",
+-->"[c/FFFF00:Disorder Understar(无序之星)]",
+-->"[c/FFFF00:Example Mod]",
+-->"[c/FFFF00:Terraria]",
+-->"[c/FFFF00:TModLoader]",
 };
 ————————————————————
 
 由白向黑的自由。
+
+“这是一个由【白】向【黑】的世界。”
+“它X会去感sho，去XX书写t的X。”
+“等d，那X是n一直XX的，XXX？”
 ————————————————————
 
 0.0 - 0.1

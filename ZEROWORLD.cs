@@ -16,11 +16,17 @@ namespace ZEROWORLD
 			Assembly = Assembly.GetExecutingAssembly();
 			Instance = this;
 			DeveloperMode = false;
+			ZAction.Initialize();
 		}
 
 		public override void Load()
 		{
+			ZAction.Load();
+		}
 
+		public override void Unload()
+		{
+			ZAction.Unload();
 		}
 
 		#region 引用其他类的方法

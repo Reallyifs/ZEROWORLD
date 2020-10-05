@@ -23,7 +23,7 @@ namespace ZEROWORLD.Items
             Tooltip.AddTranslation(GameCulture.Chinese, CTooltip);
         }
 
-        protected abstract void OwnerListDefault(out int type, out float level, out Version version, out DateTime date);
+        protected abstract int OwnerListDefault(out float level, out Version version, out DateTime date);
         protected virtual void OwnerRecipes(ModRecipe modRecipe)
         {
         }
