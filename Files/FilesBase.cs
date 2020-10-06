@@ -7,10 +7,12 @@ namespace ZEROWORLD.Files
         public virtual void Load()
         {
         }
+
         public virtual void Unload()
         {
         }
-        public virtual void Draw(SpriteBatch spriteBatch)
+
+        public virtual void TickDraw(SpriteBatch spriteBatch)
         {
         }
     }

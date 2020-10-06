@@ -1,5 +1,5 @@
-﻿using Terraria.ModLoader;
-using static Terraria.ModLoader.ModLoader;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader;
 
 namespace ZEROWORLD.Files
 {
@@ -7,14 +7,16 @@ namespace ZEROWORLD.Files
     {
         internal static class LuoGod
         {
-            public static Mod Instance => GetMod("LuoGod");
+            public static Mod Instance => ModLoader.GetMod("LuoGod");
             public static bool Loaded => Instance != null;
+            public static Texture2D GetTexture(string name) => Instance.GetTexture(name);
         }
 
         internal static class Calamity
         {
-            public static Mod Instance => GetMod("CalamityMod");
+            public static Mod Instance => ModLoader.GetMod("CalamityMod");
             public static bool Loaded => Instance != null;
+            public static Texture2D GetTexture(string name) => Instance.GetTexture(name);
         }
     }
 }
