@@ -1,10 +1,32 @@
 ﻿using System;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace ZEROWORLD.Items
 {
     public class MochidzukiAku : ZItem
     {
+        protected override void OwnerDisplay(GameCulture culture, out bool support, out string displayName, out string displayTooltip)
+        {
+            if (culture == GameCulture.English)
+            {
+                support = true;
+                displayName = "Mochizuki Ark";
+                displayTooltip = "\"Here we offer our blessings and destiny.\"\n\"Unspeakable trouble.\"";
+            }
+            else if (culture == GameCulture.Chinese)
+            {
+                support = true;
+                displayName = "Aku";
+                displayTooltip = "“将其于斩杀的那一刻……”\n“跪下。”";
+            }
+            else
+            {
+                support = false;
+                displayName = displayTooltip = "";
+            }
+        }
+
         protected override int OwnerListDefault(out float level, out Version version, out DateTime date)
         {
             date = new DateTime(2020, 9, 22);
@@ -13,13 +35,5 @@ namespace ZEROWORLD.Items
             return ModContent.ItemType<MochidzukiAku>();
         }
 
-        protected override void OwnerStaticDefault(out string DefaultName, out string ChineseName, out string DefaultTooltip,
-            out string ChineseTooltip)
-        {
-            ChineseName = "Aku";
-            DefaultName = "Mochizuki Ark";
-            ChineseTooltip = "“将其于斩杀的那一刻……”\n“跪下。”";
-            DefaultTooltip = "\"Here we offer our blessings and destiny.\"\n\"Unspeakable trouble.\"";
-        }
     }
 }

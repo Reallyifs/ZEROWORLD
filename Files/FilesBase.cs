@@ -15,5 +15,9 @@ namespace ZEROWORLD.Files
         public virtual void TickDraw(SpriteBatch spriteBatch)
         {
         }
+
+        public virtual void PostDraw(SpriteBatch spriteBatch)
+        {
+        }
     }
 }

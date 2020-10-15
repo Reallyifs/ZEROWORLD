@@ -5,17 +5,19 @@ namespace ZEROWORLD.Files
 {
     public static class ZAction
     {
-        internal static Action<SpriteBatch> TickDrawAction;
         internal static Action LoadAction;
         internal static Action UnloadAction;
+        internal static Action<SpriteBatch> TickDrawAction;
+        internal static Action<SpriteBatch> PostDrawAction;
 
         public static Action NewAction => new Action(delegate { });
 
         internal static void Initialize()
         {
             LoadAction = NewAction;
-            TickDrawAction = new Action<SpriteBatch>(delegate { });
             UnloadAction = NewAction;
+            TickDrawAction = new Action<SpriteBatch>(delegate { });
+            PostDrawAction = new Action<SpriteBatch>(delegate { });
             ZEROWORLD.Assembly.GetTypes().ForEach(delegate (Type type)
             {
                 if (type.IsClass)
@@ -23,17 +25,14 @@ namespace ZEROWORLD.Files
                     if (type.IsSubclassOf<FilesBase>())
                     {
                         LoadAction += type.GetMethod("Load").CreateDelegate<Action>();
-                        TickDrawAction += type.GetMethod("TickDraw").CreateDelegate<Action<SpriteBatch>>();
                         UnloadAction += type.GetMethod("Unload").CreateDelegate<Action>();
+                        TickDrawAction += type.GetMethod("TickDraw").CreateDelegate<Action<SpriteBatch>>();
+                        PostDrawAction += type.GetMethod("PostDraw").CreateDelegate<Action<SpriteBatch>>();
                     }
                 }
             });
         }
 
-        internal static void Load() => LoadAction();
-
         internal static void TickDraw() => ZFunctions.SafeSpriteBatch(TickDrawAction);
-
-        internal static void Unload() => UnloadAction();
     }
 }

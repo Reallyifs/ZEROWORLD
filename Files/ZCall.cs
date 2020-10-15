@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using ZEROWORLD.Items;
 
 namespace ZEROWORLD.Files
 {
@@ -11,17 +12,6 @@ namespace ZEROWORLD.Files
     {
         internal static Type ZCallType;
         internal static MethodInfo[] ZCallMethods;
-
-        public static object Call(params object[] args)
-        {
-            (bool, MethodInfo) result = ParametersCheck(args);
-            if (!result.Item1)
-                return null;
-            object[] parameters = new object[args.Length - 1];
-            for (int i = 1; i < args.Length; i++)
-                parameters[i - 1] = args[i];
-            return result.Item2.Invoke(null, parameters);
-        }
 
         public override void Load()
         {
@@ -35,23 +25,30 @@ namespace ZEROWORLD.Files
             ZCallMethods = null;
         }
 
-        private static (bool, MethodInfo) ParametersCheck(object[] args)
+        public static object Call(object[] args)
         {
-            if (!(args[0] is string))
-                return (false, null);
-            string methodName = args[0] as string;
-            if (methodName.Is("Load", "Unload"))
-                return (false, null);
-            MethodInfo info = ZCallType.GetMethod(methodName);
-            if (info == null)
-                return (false, info);
-            ParameterInfo[] parameters = info.GetParameters();
-            for (int i = 1; i < args.Length; i++)
+            if (args != null && args.Length >= 1 && args[0] is string)
             {
-                if (!parameters[i - 1].Equals(args[i]))
-                    return (false, info);
+                switch ((args[0] as string).ToLower())
+                {
+                    case "iteminfo":
+                        {
+                            string itemName = args[1] as string;
+                            if (!string.IsNullOrWhiteSpace(itemName))
+                                return ItemInfo(itemName);
+                            break;
+                        }
+                }
             }
-            return (true, info);
+            return null;
+        }
+
+        public static ZItemInfo ItemInfo(string itemName)
+        {
+            int internalID = ZEROWORLD.Instance.ItemType(itemName);
+            if (ZItemCollection.ItemCollection.TryGetValue(internalID, out ZItemInfo info))
+                return info;
+            return null;
         }
     }
 }

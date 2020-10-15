@@ -32,6 +32,6 @@ namespace ZEROWORLD.Files
             QuestionMark = null;
         }
 
-        public static Texture2D TexturnInImages(string path) => ZEROWORLD.Instance.GetTexture($"Images/{path}");
+        private static Texture2D TexturnInImages(string path) => ZEROWORLD.Instance.GetTexture($"Images/{path}");
     }
 }

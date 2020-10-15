@@ -1,6 +1,7 @@
 ﻿using System;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using ZEROWORLD.Files;
 
 namespace ZEROWORLD.Items
 {
@@ -13,26 +14,36 @@ namespace ZEROWORLD.Items
                 OwnerRecipes(modRecipe);
             modRecipe.AddRecipe();
         }
+
         public override sealed void SetStaticDefaults()
         {
             ZItemCollection.AddItemCollection(OwnerListDefault);
-            OwnerStaticDefault(out string DName, out string CName, out string DTooltip, out string CTooltip);
-            DisplayName.SetDefault(DName);
-            DisplayName.AddTranslation(GameCulture.Chinese, CName);
-            Tooltip.SetDefault(DTooltip);
-            Tooltip.AddTranslation(GameCulture.Chinese, CTooltip);
+            ZList.Cultures.ForEach(delegate (GameCulture culture)
+            {
+                OwnerDisplay(culture, out bool support, out string displayName, out string displayTooltip);
+                if (support)
+                {
+                    if (culture == GameCulture.English)
+                    {
+                        DisplayName.SetDefault(displayName);
+                        Tooltip.SetDefault(displayTooltip);
+                        return;
+                    }
+                    DisplayName.AddTranslation(culture, displayName);
+                    Tooltip.AddTranslation(culture, displayTooltip);
+                }
+            });
+            OwnerStaticSet();
         }
 
         protected abstract int OwnerListDefault(out float level, out Version version, out DateTime date);
+        protected abstract void OwnerDisplay(GameCulture culture, out bool support, out string displayName, out string displayTooltip);
+
         protected virtual void OwnerRecipes(ModRecipe modRecipe)
         {
         }
-        protected virtual void OwnerStaticDefault(out string DefaultName, out string ChineseName, out string DefaultTooltip,
-            out string ChineseTooltip)
+        protected virtual void OwnerStaticSet()
         {
-            ChineseName = "默认名字";
-            DefaultName = "Default";
-            ChineseTooltip = DefaultTooltip = "";
         }
     }
 }

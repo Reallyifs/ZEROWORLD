@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Microsoft.Xna.Framework.Graphics;
+using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 using ZEROWORLD.Files;
@@ -32,14 +33,19 @@ namespace ZEROWORLD
 
 		public override void Load()
 		{
-			ZAction.Load();
+			ZAction.LoadAction();
 			Main.OnTick += ZAction.TickDraw;
 		}
 
 		public override void Unload()
 		{
-			ZAction.Unload();
+			ZAction.UnloadAction();
 			Main.OnTick -= ZAction.TickDraw;
+		}
+
+		public override void PostDrawInterface(SpriteBatch spriteBatch)
+		{
+			ZAction.PostDrawAction(spriteBatch);
 		}
 
 		#region 引用其他类的方法

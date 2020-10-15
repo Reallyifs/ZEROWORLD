@@ -15,6 +15,7 @@ namespace ZEROWORLD.Items
                 RecipeGroup.RegisterGroup(displayName, recipeGroup);
             }
         }
+
         public static void Recipes()
         {
             void Come(int[][] ingredientID, int[] tileID, int[] resultID, Action<ModRecipe> action = null)
