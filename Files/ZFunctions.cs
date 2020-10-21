@@ -1,13 +1,45 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria;
+using ZEROWORLD.Items;
 
 namespace ZEROWORLD.Files
 {
     public static class ZFunctions
     {
+        public static Item ItemSetDefaults(int type, bool noMatCheck = false)
+        {
+            Item item = new Item();
+            item.SetDefaults(type, noMatCheck);
+            return item;
+        }
+
+        public static ZItemClass ToZItemClass(Item item)
+        {
+            if (item.magic)
+                return ZItemClass.Magic;
+            else if (item.melee)
+                return ZItemClass.Melee;
+            else if (item.ranged)
+                return ZItemClass.Ranged;
+            else if (item.summon)
+                return ZItemClass.Summon;
+            else if (item.thrown)
+                return ZItemClass.Thrown;
+            else
+                return ZItemClass.Default;
+        }
+
+        public static void ContainsThenInsert<T>(this List<T> list, T findItem, T insertItem, int indexAdd = 0)
+        {
+            int index = list.IndexOf(findItem);
+            if (index != 1)
+                list.Insert(index + indexAdd, insertItem);
+        }
+
         public static void SafeSpriteBatch(Action<SpriteBatch> action)
         {
             SpriteBatch defaultSB = Main.spriteBatch;

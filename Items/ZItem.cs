@@ -20,7 +20,9 @@ namespace ZEROWORLD.Items
             ZItemCollection.AddItemCollection(OwnerListDefault);
             ZList.Cultures.ForEach(delegate (GameCulture culture)
             {
-                OwnerDisplay(culture, out bool support, out string displayName, out string displayTooltip);
+                string displayName = "Default";
+                string displayTooltip = "";
+                OwnerDisplay(culture, out bool support, ref displayName, ref displayTooltip);
                 if (support)
                 {
                     if (culture == GameCulture.English)
@@ -33,16 +35,12 @@ namespace ZEROWORLD.Items
                     Tooltip.AddTranslation(culture, displayTooltip);
                 }
             });
-            OwnerStaticSet();
         }
 
         protected abstract int OwnerListDefault(out float level, out Version version, out DateTime date);
-        protected abstract void OwnerDisplay(GameCulture culture, out bool support, out string displayName, out string displayTooltip);
+        protected abstract void OwnerDisplay(GameCulture culture, out bool support, ref string displayName, ref string displayTooltip);
 
         protected virtual void OwnerRecipes(ModRecipe modRecipe)
-        {
-        }
-        protected virtual void OwnerStaticSet()
         {
         }
     }

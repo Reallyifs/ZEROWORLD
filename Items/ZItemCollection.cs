@@ -30,6 +30,7 @@ namespace ZEROWORLD.Items
             if (type <= ItemLoader.ItemCount && !ItemCollection.ContainsKey(type))
             {
                 ZItemInfo itemInfo = new ZItemInfo(type, level, version, date);
+                itemInfo.SetDefaultByType();
                 ItemCollection.Add(type, itemInfo);
             }
         }

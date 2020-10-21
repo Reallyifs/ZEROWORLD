@@ -6,7 +6,7 @@ namespace ZEROWORLD.Items
 {
     public class MochidzukiAku : ZItem
     {
-        protected override void OwnerDisplay(GameCulture culture, out bool support, out string displayName, out string displayTooltip)
+        protected override void OwnerDisplay(GameCulture culture, out bool support, ref string displayName, ref string displayTooltip)
         {
             if (culture == GameCulture.English)
             {
@@ -23,7 +23,6 @@ namespace ZEROWORLD.Items
             else
             {
                 support = false;
-                displayName = displayTooltip = "";
             }
         }
 
@@ -34,6 +33,5 @@ namespace ZEROWORLD.Items
             version = new Version(0, 1, 0, 1);
             return ModContent.ItemType<MochidzukiAku>();
         }
-
     }
 }

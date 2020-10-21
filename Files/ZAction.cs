@@ -11,24 +11,30 @@ namespace ZEROWORLD.Files
         internal static Action<SpriteBatch> PostDrawAction;
 
         public static Action NewAction => new Action(delegate { });
+        public static Action<SpriteBatch> NewSpriteBatchAction => new Action<SpriteBatch>(delegate { });
 
         internal static void Initialize()
         {
             LoadAction = NewAction;
             UnloadAction = NewAction;
-            TickDrawAction = new Action<SpriteBatch>(delegate { });
-            PostDrawAction = new Action<SpriteBatch>(delegate { });
+            TickDrawAction = NewSpriteBatchAction;
+            PostDrawAction = NewSpriteBatchAction;
             ZEROWORLD.Assembly.GetTypes().ForEach(delegate (Type type)
             {
                 if (type.IsClass)
                 {
                     if (type.IsSubclassOf<FilesBase>())
                     {
-                        LoadAction += type.GetMethod("Load").CreateDelegate<Action>();
-                        UnloadAction += type.GetMethod("Unload").CreateDelegate<Action>();
-                        TickDrawAction += type.GetMethod("TickDraw").CreateDelegate<Action<SpriteBatch>>();
-                        PostDrawAction += type.GetMethod("PostDraw").CreateDelegate<Action<SpriteBatch>>();
+                        LoadAction += TypeDelegate("Load");
+                        UnloadAction += TypeDelegate("Unload");
+                        TickDrawAction += TypeDelegateSpriteBatch("TickDraw");
+                        PostDrawAction += TypeDelegateSpriteBatch("PostDraw");
                     }
+                }
+                Action TypeDelegate(string name) => type.GetMethod(name)?.CreateDelegate<Action>() ?? NewAction;
+                Action<SpriteBatch> TypeDelegateSpriteBatch(string name)
+                {
+                    return type.GetMethod(name)?.CreateDelegate<Action<SpriteBatch>>() ?? NewSpriteBatchAction;
                 }
             });
         }
