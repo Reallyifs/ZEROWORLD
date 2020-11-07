@@ -1,44 +1,41 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using ZEROWORLD.Files.Interfaces;
 
 namespace ZEROWORLD.Files
 {
     public static class ZAction
     {
+        public const BindingFlags FlagsAll = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance;
+
         internal static Action LoadAction;
         internal static Action UnloadAction;
-        internal static Action<SpriteBatch> TickDrawAction;
-        internal static Action<SpriteBatch> PostDrawAction;
+        internal static Action<List<(string, string, string[])>> LanguageAction;
 
         public static Action NewAction => new Action(delegate { });
-        public static Action<SpriteBatch> NewSpriteBatchAction => new Action<SpriteBatch>(delegate { });
 
         internal static void Initialize()
         {
             LoadAction = NewAction;
             UnloadAction = NewAction;
-            TickDrawAction = NewSpriteBatchAction;
-            PostDrawAction = NewSpriteBatchAction;
+            LanguageAction = new Action<List<(string, string, string[])>>(delegate { });
             ZEROWORLD.Assembly.GetTypes().ForEach(delegate (Type type)
             {
                 if (type.IsClass)
                 {
-                    if (type.IsSubclassOf<FilesBase>())
+                    if (type.GetInterface<ILoadBase>() != null)
                     {
-                        LoadAction += TypeDelegate("Load");
-                        UnloadAction += TypeDelegate("Unload");
-                        TickDrawAction += TypeDelegateSpriteBatch("TickDraw");
-                        PostDrawAction += TypeDelegateSpriteBatch("PostDraw");
+                        LoadAction += TypeDelegate<Action>("Load");
+                        UnloadAction += TypeDelegate<Action>("Unload");
                     }
+                    if (type.GetInterface<ILanguageBase>() != null)
+                        LanguageAction += TypeDelegate<Action<List<(string, string, string[])>>>("LanguageLoad");
                 }
-                Action TypeDelegate(string name) => type.GetMethod(name)?.CreateDelegate<Action>() ?? NewAction;
-                Action<SpriteBatch> TypeDelegateSpriteBatch(string name)
-                {
-                    return type.GetMethod(name)?.CreateDelegate<Action<SpriteBatch>>() ?? NewSpriteBatchAction;
-                }
+                T TypeDelegate<T>(string name) where T : Delegate => type.GetMethod(name, FlagsAll)?.CreateDelegate<T>();
             });
         }
 
-        internal static void TickDraw() => ZFunctions.SafeSpriteBatch(TickDrawAction);
+        internal static void LanguageLoad(List<(string, string, string[])> array) => LanguageAction(array);
     }
 }

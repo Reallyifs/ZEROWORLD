@@ -1,15 +1,33 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria;
+using Terraria.ID;
 using ZEROWORLD.Items;
 
 namespace ZEROWORLD.Files
 {
     public static class ZFunctions
     {
+        public static Type GetInterface<T>(this Type type) => type.GetInterface(typeof(T).Name);
+
+        public static bool Contains<T>(this T[] array, T item) => array.ToList().Contains(item);
+
+        public static void NewText(this string text, byte R = 255, byte G = 255, byte B = 255)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer)
+                Main.NewText(text, R, G, B);
+        }
+
+        public static void NewText(this string text, Color textColor)
+        {
+            if (Main.netMode == NetmodeID.SinglePlayer)
+                Main.NewText(text, textColor);
+        }
+
         public static Item ItemSetDefaults(int type, bool noMatCheck = false)
         {
             Item item = new Item();
@@ -17,20 +35,22 @@ namespace ZEROWORLD.Files
             return item;
         }
 
-        public static ZItemClass ToZItemClass(Item item)
+        public static ZItemClass[] ToZItemClass(Item item)
         {
+            List<ZItemClass> Classes = new List<ZItemClass>();
             if (item.magic)
-                return ZItemClass.Magic;
-            else if (item.melee)
-                return ZItemClass.Melee;
-            else if (item.ranged)
-                return ZItemClass.Ranged;
-            else if (item.summon)
-                return ZItemClass.Summon;
-            else if (item.thrown)
-                return ZItemClass.Thrown;
-            else
-                return ZItemClass.Default;
+                Classes.Add(ZItemClass.Magic);
+            if (item.melee)
+                Classes.Add(ZItemClass.Melee);
+            if (item.ranged)
+                Classes.Add(ZItemClass.Ranged);
+            if (item.summon)
+                Classes.Add(ZItemClass.Summon);
+            if (item.thrown)
+                Classes.Add(ZItemClass.Thrown);
+            if (Classes.Count < 1)
+                Classes.Add(ZItemClass.Default);
+            return Classes.ToArray();
         }
 
         public static void ContainsThenInsert<T>(this List<T> list, T findItem, T insertItem, int indexAdd = 0)

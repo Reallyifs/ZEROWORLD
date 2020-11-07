@@ -1,8 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ZEROWORLD.Files.Interfaces;
 
 namespace ZEROWORLD.Files
 {
-    public class ZImage : FilesBase
+    public sealed class ZImage : ILoadBase
     {
         /// <summary>
         /// 0：无框黑<para></para>
@@ -16,7 +17,7 @@ namespace ZEROWORLD.Files
             private set;
         }
 
-        public override void Load()
+        public void Load()
         {
             QuestionMark = new Texture2D[]
             {
@@ -27,7 +28,7 @@ namespace ZEROWORLD.Files
             };
         }
 
-        public override void Unload()
+        public void Unload()
         {
             QuestionMark = null;
         }

@@ -14,13 +14,16 @@ namespace ZEROWORLD.Items
         public DateTime Date;
 
         public int Crit;
+        public int Width;
         public int Damage;
+        public int Height;
         public int UseTime;
+        public int MaxStack;
         public bool CanEquipped;
         public bool Expert;
         public float Scale;
         public float KnockBack;
-        public ZItemClass Class;
+        public ZItemClass[] Class;
 
         public ZItemInfo(int type)
         {
@@ -44,9 +47,12 @@ namespace ZEROWORLD.Items
                 Crit = another.Crit;
                 Class = another.Class;
                 Scale = another.Scale;
+                Width = another.Width;
                 Damage = another.Damage;
                 Expert = another.Expert;
+                Height = another.Height;
                 UseTime = another.UseTime;
+                MaxStack = another.MaxStack;
                 KnockBack = another.KnockBack;
                 CanEquipped = another.CanEquipped;
             }
@@ -58,9 +64,12 @@ namespace ZEROWORLD.Items
             Crit = typeItem.crit;
             Class = ZFunctions.ToZItemClass(typeItem);
             Scale = typeItem.scale;
+            Width = typeItem.width;
             Damage = typeItem.damage;
             Expert = typeItem.expert || typeItem.expertOnly;
+            Height = typeItem.height;
             UseTime = Math.Max(typeItem.useTime, typeItem.useAnimation);
+            MaxStack = typeItem.maxStack;
             KnockBack = typeItem.knockBack;
             CanEquipped = typeItem.accessory || typeItem.vanity;
         }

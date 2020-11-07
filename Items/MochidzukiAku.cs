@@ -6,7 +6,13 @@ namespace ZEROWORLD.Items
 {
     public class MochidzukiAku : ZItem
     {
-        protected override void OwnerDisplay(GameCulture culture, out bool support, ref string displayName, ref string displayTooltip)
+        protected override void OwnerDefaults()
+        {
+            Damage = 268;
+            KnockBack = 0.6f;
+        }
+
+        protected override void OwnerDisplay(GameCulture culture, ref bool support, ref string displayName, ref string displayTooltip)
         {
             if (culture == GameCulture.English)
             {
@@ -17,20 +23,30 @@ namespace ZEROWORLD.Items
             else if (culture == GameCulture.Chinese)
             {
                 support = true;
-                displayName = "Aku";
+                displayName = "望月方舟";
                 displayTooltip = "“将其于斩杀的那一刻……”\n“跪下。”";
             }
-            else
-            {
-                support = false;
-            }
+        }
+
+        protected override void OwnerFixedCrit(ref double hardMode, ref double expertMode, ref double zeroMode)
+        {
+            hardMode = 1.2f;
+            expertMode = 1.6f;
+            zeroMode = 2f;
+        }
+
+        protected override void OwnerFixedKnockBack(ref double hardMode, ref double expertMode, ref double zeroMode)
+        {
+            hardMode = 0.8f;
+            expertMode = 1.3f;
+            zeroMode = 0.9f;
         }
 
         protected override int OwnerListDefault(out float level, out Version version, out DateTime date)
         {
             date = new DateTime(2020, 9, 22);
             level = 18.7f;
-            version = new Version(0, 1, 0, 1);
+            version = new Version(0, 1, 0, 0);
             return ModContent.ItemType<MochidzukiAku>();
         }
     }

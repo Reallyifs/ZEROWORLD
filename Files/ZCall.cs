@@ -10,7 +10,7 @@ namespace ZEROWORLD.Files
     {
         public static object Call(object[] args)
         {
-            if (args != null && args.Length >= 1 && args[0] is string)
+            if (args != null && args.Length >= 2 && args[0] is string)
             {
                 switch ((args[0] as string).ToLower())
                 {

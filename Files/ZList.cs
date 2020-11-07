@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
+using Terraria.ID;
 using Terraria.Localization;
+using ZEROWORLD.Files.Interfaces;
 
 namespace ZEROWORLD.Files
 {
-    public class ZList : FilesBase
+    public sealed class ZList : ILoadBase
     {
+        public static List<int> VanillaBosses;
         public static List<GameCulture> Cultures;
 
-        public override void Load()
+        public void Load()
         {
             Cultures = new List<GameCulture>()
             {
-                null,
                 GameCulture.Chinese,
                 GameCulture.English,
                 GameCulture.French,
@@ -22,11 +24,34 @@ namespace ZEROWORLD.Files
                 GameCulture.Russian,
                 GameCulture.Spanish
             };
+            VanillaBosses = new List<int>()
+            {
+                NPCID.KingSlime,
+                NPCID.EyeofCthulhu,
+                NPCID.EaterofWorldsHead,
+                NPCID.BrainofCthulhu,
+                NPCID.QueenBee,
+                NPCID.SkeletronHead,
+                NPCID.WallofFlesh,
+                NPCID.TheDestroyer,
+                NPCID.Retinazer,
+                NPCID.Spazmatism,
+                NPCID.SkeletronPrime,
+                NPCID.Plantera,
+                NPCID.Golem,
+                NPCID.CultistBoss,
+                NPCID.LunarTowerVortex,
+                NPCID.LunarTowerStardust,
+                NPCID.LunarTowerNebula,
+                NPCID.LunarTowerSolar,
+                NPCID.MoonLordCore
+            };
         }
 
-        public override void Unload()
+        public void Unload()
         {
             Cultures = null;
+            VanillaBosses = null;
         }
     }
 }
