@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria.ModLoader;
+using ZEROWORLD.Files;
 using ZEROWORLD.Files.Interfaces;
 
 namespace ZEROWORLD.Items
@@ -24,12 +25,8 @@ namespace ZEROWORLD.Items
         internal static void AddItemCollection(ItemCollectionDelegate item)
         {
             int type = item(out float level, out Version version, out DateTime date);
-            if (CheckMark(ref level, ref version, ref date) && type <= ItemLoader.ItemCount && !ItemCollection.ContainsKey(type))
-            {
-                ZItemInfo itemInfo = new ZItemInfo(type, level, version, date);
-                itemInfo.SetDefaultByType();
-                ItemCollection.Add(type, itemInfo);
-            }
+            if (CheckMask(type) && CheckMark(ref level, ref version, ref date))
+                ItemCollection.Add(type, ZFunctions.ZItemInfoSetDefaults(type, level, version, date));
         }
 
         private static bool CheckMark(ref float level, ref Version version, ref DateTime date, bool passAlways = true)
@@ -49,6 +46,12 @@ namespace ZEROWORLD.Items
                     date = dateNew;
                 return true;
             }
+        }
+
+        private static bool CheckMask(int type)
+        {
+            ModItem item = ModContent.GetModItem(type);
+            return item != null && item.mod == ZEROWORLD.Instance && !ItemCollection.ContainsKey(type);
         }
     }
 }

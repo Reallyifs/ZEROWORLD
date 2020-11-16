@@ -12,6 +12,13 @@ namespace ZEROWORLD.Files
 {
     public static class ZFunctions
     {
+        public static ZItemInfo ZItemInfoSetDefaults(int type, float level, Version version, DateTime date, bool noMatCheck = false)
+        {
+            ZItemInfo info = new ZItemInfo(type, level, version, date);
+            info.SetDefaultByType(noMatCheck);
+            return info;
+        }
+
         public static Type GetInterface<T>(this Type type) => type.GetInterface(typeof(T).Name);
 
         public static bool Contains<T>(this T[] array, T item) => array.ToList().Contains(item);

@@ -83,10 +83,10 @@ namespace ZEROWORLD.Items
 
         public static ZItemInfo PasteFrom(int type)
         {
-            ZItemInfo info = new ZItemInfo(type);
+            ZItemInfo newInfo = new ZItemInfo(type);
             if (ItemLoader.GetItem(type) != null && ZItemCollection.ItemCollection.ContainsKey(type))
-                info.CopyFrom(ZItemCollection.ItemCollection[type]);
-            return info;
+                newInfo.CopyFrom(ZItemCollection.ItemCollection[type]);
+            return newInfo;
         }
     }
 }

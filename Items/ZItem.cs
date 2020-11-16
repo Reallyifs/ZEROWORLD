@@ -30,6 +30,7 @@ namespace ZEROWORLD.Items
         public override void AddRecipes()
         {
             ModRecipe modRecipe = new ModRecipe(mod);
+            modRecipe.SetResult(this);
             if (ZEROWORLD.DeveloperMode)
                 OwnerRecipes(modRecipe);
             modRecipe.AddRecipe();
@@ -39,9 +40,9 @@ namespace ZEROWORLD.Items
         {
             double fixMultiply = 1;
             if (Main.hardMode && Crits.ContainsKey(1))
-                fixMultiply *= Crits[3];
+                fixMultiply *= Crits[1];
             if (Main.expertMode && Crits.ContainsKey(2))
-                fixMultiply *= Crits[3];
+                fixMultiply *= Crits[2];
             if (ZWorld.ExtendMode == 1 && Crits.ContainsKey(3))
                 fixMultiply *= Crits[3];
             crit = (int)(crit * fixMultiply);

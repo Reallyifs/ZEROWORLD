@@ -8,6 +8,7 @@ namespace ZEROWORLD.Items
     {
         protected override void OwnerDefaults()
         {
+            Crit = 39;
             Damage = 268;
             KnockBack = 0.6f;
         }
