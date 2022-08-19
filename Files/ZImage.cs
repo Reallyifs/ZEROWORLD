@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System.Reflection;
 using ZEROWORLD.Files.Interfaces;
 
 namespace ZEROWORLD.Files
@@ -36,29 +37,32 @@ namespace ZEROWORLD.Files
 
         public void Load()
         {
-            MusicIcon = new Texture2D[]
-            {
-                TexturnInImages("MusicIcon/AlwaysFrosted"),
-                TexturnInImages("MusicIcon/CloudyNoConfuse"),
-                TexturnInImages("MusicIcon/SunsetByTheWarmSea")
-            };
+            //MusicIcon = new Texture2D[]
+            //{
+            //    TextureInImages("MusicIcon/AlwaysFrosted"),
+            //    TextureInImages("MusicIcon/CloudyNoConfuse"),
+            //    TextureInImages("MusicIcon/SunsetByTheWarmSea")
+            //};
             QuestionMark = new Texture2D[]
             {
-                TexturnInImages("Symbols/QuestionMarkBlack"),
-                TexturnInImages("Symbols/QuestionMarkWhite"),
-                TexturnInImages("Symbols/QuestionMarkOFBlack"),
-                TexturnInImages("Symbols/QuestionMarkOFWhite")
+                TextureInImages("Symbols/QuestionMarkBlack"),
+                TextureInImages("Symbols/QuestionMarkWhite"),
+                TextureInImages("Symbols/QuestionMarkOFBlack"),
+                TextureInImages("Symbols/QuestionMarkOFWhite")
             };
             Loaded = true;
         }
 
         public void Unload()
         {
-            MusicIcon = null;
-            QuestionMark = null;
+            foreach (FieldInfo info in typeof(ZImage).GetFields(BindingFlags.Static | BindingFlags.NonPublic))
+            {
+                if (info.Name != "Loaded")
+                    info.SetValue(null, null);
+            }
             Loaded = false;
         }
 
-        private static Texture2D TexturnInImages(string path) => ZEROWORLD.Instance.GetTexture($"Images/{path}");
+        private static Texture2D TextureInImages(string path) => ZEROWORLD.Instance.GetTexture($"Images/{path}");
     }
 }

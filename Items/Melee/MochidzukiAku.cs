@@ -1,31 +1,37 @@
 ﻿using System;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ID;
 
-namespace ZEROWORLD.Items
+namespace ZEROWORLD.Items.Melee
 {
-    public class MochidzukiAku : ZItem
+    /// <summary>
+    /// 望月方舟
+    /// </summary>
+    public sealed class MochidzukiAku : ZItem
     {
         protected override void OwnerDefaults()
         {
-            Crit = 39;
-            Damage = 268;
-            KnockBack = 0.6f;
+            item.melee = true;
+            item.damage = 269;
+            item.crit = 1;
+            item.knockBack = 0.6f;
+            item.useStyle = ItemUseStyleID.SwingThrow;
         }
 
         protected override void OwnerDisplay(GameCulture culture, ref bool support, ref string displayName, ref string displayTooltip)
         {
-            if (culture == GameCulture.English)
-            {
-                support = true;
-                displayName = "Mochizuki Ark";
-                displayTooltip = "\"Here we offer our blessings and destiny.\"\n\"Unspeakable trouble.\"";
-            }
-            else if (culture == GameCulture.Chinese)
+            if (culture == GameCulture.Chinese)
             {
                 support = true;
                 displayName = "望月方舟";
                 displayTooltip = "“将其于斩杀的那一刻……”\n“跪下。”";
+            }
+            else if (culture == GameCulture.English)
+            {
+                support = true;
+                displayName = "Mochizuki Ark";
+                displayTooltip = "\"Here we offer our blessings and destiny.\"\n\"Unspeakable trouble.\"";
             }
         }
 

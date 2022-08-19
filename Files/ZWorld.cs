@@ -7,42 +7,46 @@ namespace ZEROWORLD.Files
 {
     public sealed class ZWorld : ModWorld
     {
-        internal static bool ZeroMode;
-        internal static byte ExtendMode;
+        internal static int extendMode;
+        internal static bool downedFirstBoss;
+
+        internal static bool ZeroMode => (extendMode & 1) == 1;
 
         public override void Initialize()
         {
-            ZeroMode = false;
-            ExtendMode = 0;
+            extendMode = 0;
+            downedFirstBoss = false;
         }
 
         public override TagCompound Save()
         {
             Dictionary<string, object> pairs = new Dictionary<string, object>
             {
-                ["ZeroMode"] = ZeroMode,
-                ["ExtendMode"] = ExtendMode
+                ["ExtendMode"] = extendMode,
+                ["DownedFirstBoss"] = downedFirstBoss
             };
+            ZAction.WorldSaveAction(pairs);
             return new TagCompound() { ["ZWSL"] = pairs };
         }
 
         public override void Load(TagCompound tag)
         {
             Dictionary<string, object> pairs = tag.Get<Dictionary<string, object>>("ZWSL");
-            ZeroMode = (bool)pairs["ZeroMode"];
-            ExtendMode = (byte)pairs["ExtendMode"];
+            extendMode = (byte)pairs["ExtendMode"];
+            downedFirstBoss = (bool)pairs["DownedFirstBoss"];
+            ZAction.WorldLoadAction(pairs);
         }
 
         public override void NetSend(BinaryWriter writer)
         {
-            writer.Write(ZeroMode);
-            writer.Write(ExtendMode);
+            writer.Write(extendMode);
+            writer.Write(downedFirstBoss);
         }
 
         public override void NetReceive(BinaryReader reader)
         {
-            ZeroMode = reader.ReadBoolean();
-            ExtendMode = reader.ReadByte();
+            extendMode = reader.ReadByte();
+            downedFirstBoss = reader.ReadBoolean();
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ZEROWORLD.Files
             if (!string.IsNullOrWhiteSpace(itemName))
             {
                 int internalID = ZEROWORLD.Instance.ItemType(itemName);
-                if (ZItemCollection.ItemCollection.TryGetValue(internalID, out ZItemInfo info))
+                if (ZItemCollection.itemCollection.TryGetValue(internalID, out ZItemInfo info))
                     return info;
             }
             return null;

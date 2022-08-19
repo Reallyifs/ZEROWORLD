@@ -6,14 +6,14 @@ using ZEROWORLD.Items.ExtendMode;
 
 namespace ZEROWORLD.Players
 {
-    public class SetupStartPlayer : ModPlayer
+    public partial class ZPlayer : ModPlayer
     {
         public override void SetupStartInventory(IList<Item> items, bool mediumcoreDeath)
         {
             if (!mediumcoreDeath)
-                items.Add(ZFunctions.ItemSetDefaults(ModContent.ItemType<FuruiYohishi>()));
-            else
-                items.Add(ZFunctions.ItemSetDefaults(ModContent.ItemType<ChisanaMemo>()));
+            {
+                ZFunctions.ItemSetDefaults(ModContent.ItemType<FuruiYohishi>());
+            }
         }
     }
 }

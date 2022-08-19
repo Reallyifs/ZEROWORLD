@@ -2,17 +2,19 @@
 using Terraria.ID;
 using Terraria.Localization;
 using ZEROWORLD.Files.Interfaces;
+using ZEROWORLD.Items;
 
 namespace ZEROWORLD.Files
 {
     public sealed class ZList : ILoadBase
     {
-        public static List<int> VanillaBosses;
-        public static List<GameCulture> Cultures;
+        public static List<int> vanillaBosses;
+        public static List<ZItemClass> itemClasses;
+        public static List<GameCulture> cultures;
 
         public void Load()
         {
-            Cultures = new List<GameCulture>()
+            cultures = new List<GameCulture>()
             {
                 GameCulture.Chinese,
                 GameCulture.English,
@@ -24,7 +26,17 @@ namespace ZEROWORLD.Files
                 GameCulture.Russian,
                 GameCulture.Spanish
             };
-            VanillaBosses = new List<int>()
+            itemClasses = new List<ZItemClass>()
+            {
+                ZItemClass.Default,
+                ZItemClass.Card,
+                ZItemClass.Magic,
+                ZItemClass.Melee,
+                ZItemClass.Ranged,
+                ZItemClass.Summon,
+                ZItemClass.Thrown
+            };
+            vanillaBosses = new List<int>()
             {
                 NPCID.KingSlime,
                 NPCID.EyeofCthulhu,
@@ -50,8 +62,9 @@ namespace ZEROWORLD.Files
 
         public void Unload()
         {
-            Cultures = null;
-            VanillaBosses = null;
+            cultures = null;
+            itemClasses = null;
+            vanillaBosses = null;
         }
     }
 }

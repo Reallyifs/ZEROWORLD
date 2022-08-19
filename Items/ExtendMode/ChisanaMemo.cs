@@ -5,12 +5,15 @@ using Terraria.ModLoader;
 
 namespace ZEROWORLD.Items.ExtendMode
 {
-    public class ChisanaMemo : ZItem
+    /// <summary>
+    /// “小纸条”
+    /// </summary>
+    public sealed class ChisanaMemo : ZItem
     {
         protected override void OwnerDefaults()
         {
-            Rare = ExtendItemRare;
-            MaxStack = 1;
+            item.rare = ExtendItemRare;
+            item.maxStack = 1;
         }
 
         protected override void OwnerDisplay(GameCulture culture, ref bool support, ref string displayName, ref string displayTooltip)

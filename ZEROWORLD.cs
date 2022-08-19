@@ -1,7 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using System;
 using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using ZEROWORLD.Files;
 using ZEROWORLD.Items;
 
@@ -13,6 +14,8 @@ namespace ZEROWORLD
 		{
 			get;
 		} = true;
+
+		public static UnifiedRandom SafeRandom => Main.rand ?? (Main.rand = new UnifiedRandom(20201027));
 
 		internal static Assembly Assembly
 		{
@@ -31,18 +34,19 @@ namespace ZEROWORLD
 			ZAction.Initialize();
 		}
 
-		public override void Load()
-		{
-			ZAction.LoadAction();
-		}
+		public override void Load() => ZAction.LoadAction.TryAction(ThrowError);
 
 		public override void Unload()
 		{
-			ZAction.UnloadAction();
+			ZAction.UnloadAction.TryAction(ThrowError);
+			GC.Collect();
 		}
 
-		public override void PostDrawInterface(SpriteBatch spriteBatch)
+		internal static void ThrowError(Exception exception)
 		{
+			string writeText = $"Message: {exception.Message}\nStackTrace: {exception.StackTrace}";
+			ZDeveloperSetting.Write(ZDeveloperSetting.MessageType.Error, "{0}", writeText);
+			throw new Exception(writeText);
 		}
 
 		#region 引用其他类的方法

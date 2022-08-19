@@ -6,27 +6,28 @@ using ZEROWORLD.Files;
 
 namespace ZEROWORLD.Items.ExtendMode
 {
-    public class FuruiYohishi : ZItem
+    /// <summary>
+    /// 古老的羊皮纸
+    /// </summary>
+    public sealed class FuruiYohishi : ZItem
     {
         protected override void OwnerDefaults()
         {
-            Rare = ExtendItemRare;
-            MaxStack = 1;
+            item.rare = ExtendItemRare;
+            item.maxStack = 1;
         }
 
         protected override void OwnerDisplay(GameCulture culture, ref bool support, ref string displayName, ref string displayTooltip)
         {
-            if (culture == GameCulture.English)
-            {
-                support = true;
-                displayName = "Old parchment";
-                displayTooltip = "";
-            }
-            else if (culture == GameCulture.Chinese)
+            if (culture == GameCulture.Chinese)
             {
                 support = true;
                 displayName = "古老的羊皮纸";
-                displayTooltip = "";
+            }
+            else if (culture == GameCulture.English)
+            {
+                support = true;
+                displayName = "Old parchment";
             }
         }
 
@@ -42,7 +43,7 @@ namespace ZEROWORLD.Items.ExtendMode
 
         public override bool UseItem(Player player)
         {
-            ZWorld.ZeroMode = true;
+            ZWorld.extendMode |= ZID.ZeroMode;
             return true;
         }
     }

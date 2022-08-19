@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using ZEROWORLD.Files.Interfaces;
 
 namespace ZEROWORLD.Files
 {
-    class ZLanguage : ILoadBase
+    public class ZLanguage : ILoadBase
     {
         private static List<(string, string, string[])> Texts;
         private static Dictionary<string, string[]> TextValues;
@@ -15,7 +16,7 @@ namespace ZEROWORLD.Files
         {
             Texts = new List<(string, string, string[])>();
             TextValues = new Dictionary<string, string[]>();
-            ZAction.LanguageLoad(Texts);
+            ZAction.LanguageAction(Texts);
             End();
             Texts = null;
         }
@@ -46,10 +47,7 @@ namespace ZEROWORLD.Files
                 if (!chineseCode)
                     return Language.GetTextValue($"Mods.ZEROWORLD.{internalCode}");
                 else if (TextValues.ContainsKey(internalCode))
-                {
-                    int index = GameCulture.Chinese.IsActive ? 1 : 0;
-                    return TextValues[internalCode][index];
-                }
+                    return TextValues[internalCode][GameCulture.Chinese.IsActive.ToInt()];
             }
             return string.Empty;
         }
